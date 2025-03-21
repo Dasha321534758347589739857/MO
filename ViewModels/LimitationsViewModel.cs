@@ -1,0 +1,57 @@
+﻿using System.ComponentModel.DataAnnotations;
+using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace MO_kursasch_25.ViewModels
+{
+    public partial class LimitationsViewModel : ObservableValidator
+    {
+        [ObservableProperty]
+        private bool iterationMode = false;
+
+        [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Range(0.00000001, double.MaxValue, ErrorMessage = "Epsilon должен быть больше 0")]
+        private double epsilon = 0.1;
+
+        [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Range(1, int.MaxValue, ErrorMessage = "Количество итераций должно быть больше 0")]
+        private int itterationCount = 100;
+
+        private int _precision = 1;
+
+        public LimitationsViewModel()
+        {
+            // Валидация начальных значений
+            ValidateAllProperties();
+        }
+
+        public ((bool terationMode, int itterationCount), double epsilon, int precision) GetLimitation()
+        {
+            ClearErrors();
+
+
+            ValidateAllProperties();
+
+
+            if (HasErrors)
+            {
+                throw new ValidationException("Невозможно получить значения из-за ошибок валидации");
+            }
+
+            return ((IterationMode, ItterationCount), Epsilon, _precision);
+        }
+        partial void OnEpsilonChanged(double value)
+        {
+            if (Epsilon <= 0)
+            {
+                _precision = 1;
+                return;
+            }
+            double logStep = Math.Floor(Math.Log10(Math.Abs(Epsilon)));
+            _precision = (int)Math.Max(0, -logStep);
+        }
+
+
+    }
+}

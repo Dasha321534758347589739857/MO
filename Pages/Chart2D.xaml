@@ -1,0 +1,13 @@
+﻿<Page x:Class="MO_kursasch_25.Pages.Chart2D"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MO_kursasch_25.Pages" xmlns:ChartDirector="clr-namespace:ChartDirector;assembly=ChartDirector.Net.Desktop.Controls"
+      mc:Ignorable="d" 
+      Title="Chart2D" Loaded="Page_Loaded">
+
+    <Grid>
+        <ChartDirector:WPFChartViewer x:Name="WPFChartViewer1" Width="800" Height="450" ViewPortChanged="WPFChartViewer1_ViewPortChanged" />
+    </Grid>
+</Page>
